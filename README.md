@@ -14,6 +14,12 @@
 ## Code Review dan Mentoring 1 : 1
   Setiap tugas project yang dikerjakan oleh peserta akan direview dan dimentoring langsung oleh trainer paling lambat sehari sebelum pertemuan berikutnya dimulai. 
   
+
+## Materi Pra Syarat
+    - Algoritma dan Struktur Data
+    - Object Oriented Programming (JAVA)
+    - Basis Data
+  
 ## Materi Pendukung
   - [Java Fundamental](https://www.dicoding.com/academies/60)
   - [Dokumentasi Resmi Android](https://developer.android.com/guide)
