@@ -8,7 +8,6 @@
   - Intents 
   - Basic Networking and Background Task
   - Data Persistence
-  - Android Architecture Components 
    
 ## Submisi Project / Tugas 
   Setiap menyelesaikan 2x pertemuan, peserta akan diberikan tugas project membuat aplikasi untuk menguji pemahaman materi yang telah dipelajari. Peserta yang tidak mengerjakan tugas tepat waktu akan dikenakan denda. Submisi project wajib diupload ke github. 
@@ -16,3 +15,8 @@
   Setiap tugas project yang dikerjakan oleh peserta akan direview dan dimentoring langsung oleh trainer paling lambat sehari sebelum pertemuan berikutnya dimulai. 
   
 ## Materi Pendukung
+  - [Java Fundamental](https://www.dicoding.com/academies/60)
+  - [Dokumentasi Resmi Android](https://developer.android.com/guide)
+  - [Google Developers Training - Beginner to Advanced](https://developers.google.com/training/android/)
+  - [Udacity Android Fundamental Course](https://www.udacity.com/course/new-android-fundamentals--ud851)
+  - [Official Android Developer Course](https://developer.android.com/courses)
