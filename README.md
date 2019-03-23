@@ -16,9 +16,10 @@
   
 
 ## Materi Pra Syarat
-    - Algoritma dan Struktur Data
-    - Object Oriented Programming (JAVA)
-    - Basis Data
+   - Algoritma dan Struktur Data
+   - Object Oriented Programming (JAVA)
+   - Basis Data
+   - Git Version Control Fundamental 
   
 ## Materi Pendukung
   - [Java Fundamental](https://www.dicoding.com/academies/60)
