@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TV Series App</string>
+    <string name="release_date">9 Maret 2019</string>
+    <string name="movie_title">Avenger: Infinity War</string>
+    <string name="synopsis_label">Sinopsis</string>
+    <string name="synopsis">As the Avengers and their allies have continued to protect the world from threats too large for any one hero to handle,         a new danger has emerged from the cosmic shadows: Thanos. A despot of intergalactic infamy,         his goal is to collect all six Infinity Stones, artifacts of unimaginable power, and use them to inflict his twisted will on all of reality.         Everything the Avengers have fought for has led up to this moment - the fate of Earth and existence itself has never been more uncertain.</string>
 </resources>
