@@ -2,14 +2,12 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".MainActivity">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/backdrop_image"
@@ -25,10 +23,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/poster_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="156dp"
+            android:layout_width="100dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="208dp"
             android:scaleType="centerCrop"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="@id/backdrop_image"
@@ -69,7 +67,7 @@
             app:layout_constraintLeft_toRightOf="@id/poster_image"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/backdrop_image"
-            app:layout_constraintVertical_bias="0.5" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
@@ -100,19 +98,18 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/synopsis" />
 
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/cast_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/cast_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cast_label" />
+            app:layout_constraintTop_toBottomOf="@id/cast_label"
+            app:srcCompat="@drawable/cast_image" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/actor_name"
@@ -138,8 +135,6 @@
             app:layout_constraintLeft_toRightOf="@id/cast_image"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/actor_name" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </ScrollView>
