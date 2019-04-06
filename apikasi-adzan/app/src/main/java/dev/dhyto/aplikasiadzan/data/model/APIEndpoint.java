@@ -6,7 +6,7 @@ import retrofit2.http.Query;
 
 public interface APIEndpoint {
 
-    @GET("/calendarByCity")
+    @GET("calendarByCity")
     Call<AdzanResponse> getPrayerTimeByCity(
             @Query("city") String city,
             @Query("country") String country
