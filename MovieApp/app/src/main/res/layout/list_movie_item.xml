@@ -3,9 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data >
+        <variable
+            name="movie"
+            type="dev.dhyto.movieapp.data.model.MovieResponse.ResultsBean"/>
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="300dp"
         android:layout_gravity="center"
         android:clickable="true"
         android:focusable="true">
@@ -25,7 +31,7 @@
             android:id="@+id/title_background"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:alpha="0.7"
+            android:alpha="0.8"
             android:background="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
