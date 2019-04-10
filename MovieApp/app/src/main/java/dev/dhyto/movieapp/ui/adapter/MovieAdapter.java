@@ -45,7 +45,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         MovieResponse.ResultsBean movie = movies.get(position);
 
-        holder.viewDataBinding.tvMovieTitle.setText(movie.getTitle());
+        holder.viewDataBinding.setMovie(movie);
+
+//        holder.viewDataBinding.tvMovieTitle.setText(movie.getTitle());
 
         Glide.with(context)
                 .asBitmap()
