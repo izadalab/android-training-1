@@ -14,7 +14,8 @@ public interface ApiEndpoint {
 
     @GET("movie/{movie_id}/videos")
     Call<TrailerResponse> getTrailersByMovieId(
-            @Query("api_key") String apiKey,
-            @Path("movie_id") int movieId
+            @Path("movie_id") int movieId,
+            @Query("api_key") String apiKey
+
     );
 }

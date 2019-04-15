@@ -1,6 +1,8 @@
 package dev.dhyto.movieapp.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +39,20 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerV
 
     @Override
     public void onBindViewHolder(@NonNull TrailerViewHolder holder, int position) {
-        TrailerResponse.ResultsTrailer trailer = trailers.get(position);
+        final TrailerResponse.ResultsTrailer trailer = trailers.get(position);
 
         Glide.with(context)
                 .load("https://i1.ytimg.com/vi/" + trailer.getKey() + "/0.jpg")
                 .into(holder.viewDataBinding.trailerThumbnail);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://www.youtube.com/watch?v=" + trailer.getKey()));
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
