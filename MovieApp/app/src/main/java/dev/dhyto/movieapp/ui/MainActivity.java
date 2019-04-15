@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if (response.isSuccessful()) {
-                    List<MovieResponse.ResultsBean> movies = response.body().getResults();
+                    List<MovieResponse.Movie> movies = response.body().getResults();
                     adapter = new MovieAdapter(movies, MainActivity.this);
                     activityMainBinding.rvMovies.setAdapter(adapter);
 

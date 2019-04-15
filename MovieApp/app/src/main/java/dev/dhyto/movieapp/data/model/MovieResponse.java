@@ -1,5 +1,8 @@
 package dev.dhyto.movieapp.data.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -24,7 +27,7 @@ public class MovieResponse {
     @SerializedName("total_pages")
     private int totalPages;
     @SerializedName("results")
-    private List<ResultsBean> results;
+    private List<Movie> results;
 
     public int getPage() {
         return page;
@@ -58,11 +61,11 @@ public class MovieResponse {
         this.totalPages = totalPages;
     }
 
-    public List<ResultsBean> getResults() {
+    public List<Movie> getResults() {
         return results;
     }
 
-    public void setResults(List<ResultsBean> results) {
+    public void setResults(List<Movie> results) {
         this.results = results;
     }
 
@@ -94,7 +97,7 @@ public class MovieResponse {
         }
     }
 
-    public static class ResultsBean {
+    public static class Movie implements Parcelable {
         /**
          * vote_count : 610
          * id : 287947
@@ -140,6 +143,34 @@ public class MovieResponse {
         private String releaseDate;
         @SerializedName("genre_ids")
         private List<Integer> genreIds;
+
+        protected Movie(Parcel in) {
+            voteCount = in.readInt();
+            id = in.readInt();
+            video = in.readByte() != 0;
+            voteAverage = in.readDouble();
+            title = in.readString();
+            popularity = in.readDouble();
+            posterPath = in.readString();
+            originalLanguage = in.readString();
+            originalTitle = in.readString();
+            backdropPath = in.readString();
+            adult = in.readByte() != 0;
+            overview = in.readString();
+            releaseDate = in.readString();
+        }
+
+        public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+            @Override
+            public Movie createFromParcel(Parcel in) {
+                return new Movie(in);
+            }
+
+            @Override
+            public Movie[] newArray(int size) {
+                return new Movie[size];
+            }
+        };
 
         public int getVoteCount() {
             return voteCount;
@@ -251,6 +282,28 @@ public class MovieResponse {
 
         public void setGenreIds(List<Integer> genreIds) {
             this.genreIds = genreIds;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeInt(voteCount);
+            parcel.writeInt(id);
+            parcel.writeByte((byte) (video ? 1 : 0));
+            parcel.writeDouble(voteAverage);
+            parcel.writeString(title);
+            parcel.writeDouble(popularity);
+            parcel.writeString(posterPath);
+            parcel.writeString(originalLanguage);
+            parcel.writeString(originalTitle);
+            parcel.writeString(backdropPath);
+            parcel.writeByte((byte) (adult ? 1 : 0));
+            parcel.writeString(overview);
+            parcel.writeString(releaseDate);
         }
     }
 }

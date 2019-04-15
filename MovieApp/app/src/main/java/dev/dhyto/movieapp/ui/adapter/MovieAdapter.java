@@ -1,6 +1,7 @@
 package dev.dhyto.movieapp.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +19,16 @@ import androidx.databinding.DataBindingUtil;
 import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.RecyclerView;
 import dev.dhyto.movieapp.R;
+import dev.dhyto.movieapp.common.Constants;
 import dev.dhyto.movieapp.data.model.MovieResponse;
 import dev.dhyto.movieapp.databinding.ListMovieItemBinding;
+import dev.dhyto.movieapp.ui.DetailActivity;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
-    private static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w342/";
-
-    private List<MovieResponse.ResultsBean> movies;
+    private List<MovieResponse.Movie> movies;
     private Context context;
 
-    public MovieAdapter(List<MovieResponse.ResultsBean> movies, Context context) {
+    public MovieAdapter(List<MovieResponse.Movie> movies, Context context) {
         this.movies = movies;
         this.context = context;
     }
@@ -43,7 +44,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, int position) {
 
-        MovieResponse.ResultsBean movie = movies.get(position);
+        final MovieResponse.Movie movie = movies.get(position);
 
         holder.viewDataBinding.setMovie(movie);
 
@@ -51,7 +52,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         Glide.with(context)
                 .asBitmap()
-                .load(POSTER_BASE_URL + movie.getPosterPath())
+                .load(Constants.POSTER_BASE_URL + movie.getPosterPath())
                 .into(new BitmapImageViewTarget(holder.viewDataBinding.imgMoviePoster) {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -66,6 +67,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                         });
                     }
                 });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailActivity.class);
+//                intent.putExtra("movie_id", movie.getId());
+//                intent.putExtra("movie_title", movie.getTitle());
+                intent.putExtra("movie_intent", movie);
+                context.startActivity(intent);
+            }
+        });
 
     }
 
