@@ -1,4 +1,4 @@
-package dev.dhyto.movieapp;
+package dev.dhyto.movieapp.ui;
 
 import android.os.Bundle;
 
@@ -7,7 +7,7 @@ import java.util.List;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import dev.dhyto.movieapp.R;
 import dev.dhyto.movieapp.data.model.MovieResponse;
 import dev.dhyto.movieapp.data.remote.MovieService;
 import dev.dhyto.movieapp.databinding.ActivityMainBinding;
