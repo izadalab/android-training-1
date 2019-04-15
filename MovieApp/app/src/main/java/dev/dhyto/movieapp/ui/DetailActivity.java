@@ -2,6 +2,7 @@ package dev.dhyto.movieapp.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import dev.dhyto.movieapp.R;
 import dev.dhyto.movieapp.common.Constants;
 import dev.dhyto.movieapp.data.model.MovieResponse;
@@ -24,6 +25,8 @@ public class DetailActivity extends AppCompatActivity {
         activityDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
         displayDetail(movie);
+        initRecyclerView();
+        displayTrailers(movie.getId());
     }
 
     void displayDetail(MovieResponse.Movie movie){
@@ -39,5 +42,16 @@ public class DetailActivity extends AppCompatActivity {
         Glide.with(this).
                 load(Constants.BACKDROP_BASE_URL + movie.getBackdropPath())
                 .into(activityDetailBinding.detailTop.backropImage);
+    }
+
+    void initRecyclerView() {
+        LinearLayoutManager layoutManager =
+                new LinearLayoutManager(DetailActivity.this, LinearLayoutManager.HORIZONTAL,
+                        false);
+        activityDetailBinding.detailBottom.rvTrailers.setLayoutManager(layoutManager);
+    }
+
+    void displayTrailers(int movieId){
+
     }
 }
