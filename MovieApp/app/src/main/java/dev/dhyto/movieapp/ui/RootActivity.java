@@ -45,6 +45,8 @@ public class RootActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
             case R.id.popular_menu:
                 toolbar.setTitle(getResources().getString(R.string.popular));
+                fragment = new PopularFragment();
+                setFragment(fragment);
                 return true;
             case R.id.favorite_menu:
                 toolbar.setTitle(getResources().getString(R.string.favorite));
