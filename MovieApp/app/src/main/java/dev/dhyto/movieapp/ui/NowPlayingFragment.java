@@ -45,6 +45,8 @@ public class NowPlayingFragment extends Fragment {
 
         View view = fragmentMoviesBinding.getRoot();
 
+
+
         return view;
 
     }
@@ -67,6 +69,7 @@ public class NowPlayingFragment extends Fragment {
     }
 
     private void displayMovies() {
+        fragmentMoviesBinding.progressbar.setVisibility(View.VISIBLE);
         MovieService.getAPI().getNowPlayingMovies("678ef42a1b584848591cbd02ac3899c3").enqueue(new Callback<MovieResponse>() {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
@@ -74,13 +77,14 @@ public class NowPlayingFragment extends Fragment {
                     List<MovieResponse.Movie> movies = response.body().getResults();
                     adapter = new MovieAdapter(movies, getContext());
                     fragmentMoviesBinding.rvMovies.setAdapter(adapter);
-
+                    fragmentMoviesBinding.progressbar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
                 Log.e("error" , t.getMessage());
+                fragmentMoviesBinding.progressbar.setVisibility(View.GONE);
             }
         });
     }
