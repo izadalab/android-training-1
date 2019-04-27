@@ -15,7 +15,6 @@ public interface ApiEndpoint {
     @GET("movie/popular")
     Call<MovieResponse> getPopularMovies(@Query("api_key") String apiKey);
 
-
     @GET("movie/{movie_id}/videos")
     Call<TrailerResponse> getTrailersByMovieId(
             @Path("movie_id") int movieId,

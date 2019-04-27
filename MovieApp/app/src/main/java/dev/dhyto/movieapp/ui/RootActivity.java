@@ -8,6 +8,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -50,6 +51,8 @@ public class RootActivity extends AppCompatActivity implements BottomNavigationV
                 return true;
             case R.id.favorite_menu:
                 toolbar.setTitle(getResources().getString(R.string.favorite));
+                fragment = new FavoriteFragment();
+                setFragment(fragment);
                 return true;
         }
 

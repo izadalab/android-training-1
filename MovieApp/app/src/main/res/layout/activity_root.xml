@@ -13,6 +13,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <!--<fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="dev.dhyto.movieapp.ui.NowPlayingFragment"
+            android:id="@+id/now_playing_fragment" />-->
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"

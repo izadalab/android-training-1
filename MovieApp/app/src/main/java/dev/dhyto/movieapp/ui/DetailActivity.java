@@ -1,8 +1,18 @@
 package dev.dhyto.movieapp.ui;
 
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.bumptech.glide.Glide;
+
+import java.util.List;
+
 import dev.dhyto.movieapp.R;
 import dev.dhyto.movieapp.common.Constants;
 import dev.dhyto.movieapp.data.model.MovieResponse;
@@ -14,16 +24,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import android.os.Bundle;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-
-import java.util.List;
-
 public class DetailActivity extends AppCompatActivity {
 
-    private ActivityDetailBinding activityDetailBinding ;
+    private ActivityDetailBinding activityDetailBinding;
+    private boolean isFavorite = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +37,51 @@ public class DetailActivity extends AppCompatActivity {
 
         activityDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
+        initToolbar(movie);
         displayDetail(movie);
         initRecyclerView();
         displayTrailers(movie.getId());
     }
 
-    private void displayDetail(MovieResponse.Movie movie){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_detail_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.favorite_menu) {
+            if (isFavorite) {
+                item.setIcon(R.drawable.ic_favorite_border_black_24dp);
+                isFavorite = false;
+            } else {
+                item.setIcon(R.drawable.ic_favorite_black_24dp);
+                isFavorite = true;
+            }
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    private void initToolbar(MovieResponse.Movie movie) {
+        activityDetailBinding.collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsedToolbarTitle);
+        activityDetailBinding.collapsingToolbar.setExpandedTitleTextAppearance(R.style.ExpandedToolbarTitle);
+//        activityDetailBinding.collapsingToolbar.setContentScrimColor(getResources().getColor(android.R.color.transparent));
+
+        if (activityDetailBinding.toolbar != null) {
+            setSupportActionBar(activityDetailBinding.toolbar);
+            getSupportActionBar().setTitle(movie.getTitle());
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    private void displayDetail(MovieResponse.Movie movie) {
         activityDetailBinding.detailTop.sectionTitle.movieTitle.setText(movie.getTitle());
         activityDetailBinding.detailTop.sectionTitle.movieReleaseDate.setText(movie.getReleaseDate());
 
@@ -60,12 +103,12 @@ public class DetailActivity extends AppCompatActivity {
         activityDetailBinding.detailBottom.rvTrailers.setLayoutManager(layoutManager);
     }
 
-    private void displayTrailers(int movieId){
+    private void displayTrailers(int movieId) {
         MovieService.getAPI().getTrailersByMovieId(movieId,
                 "678ef42a1b584848591cbd02ac3899c3").enqueue(new Callback<TrailerResponse>() {
             @Override
             public void onResponse(Call<TrailerResponse> call, Response<TrailerResponse> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     List<TrailerResponse.ResultsTrailer> trailers = response.body().getResults();
                     TrailerAdapter adapter = new TrailerAdapter(trailers);
                     activityDetailBinding.detailBottom.rvTrailers.setAdapter(adapter);
