@@ -5,7 +5,6 @@ import java.util.List;
 import dev.dhyto.movieapp.data.local.MovieDao;
 import dev.dhyto.movieapp.data.local.MovieDatabase;
 import dev.dhyto.movieapp.data.model.MovieResponse;
-import dev.dhyto.movieapp.ui.adapter.MovieAdapter;
 
 public class FavoriteFragment extends BaseFragment {
 
@@ -14,8 +13,14 @@ public class FavoriteFragment extends BaseFragment {
     }
 
     @Override
-    protected void displayMovies() {
+    protected void getMovies() {
         getAllMovies();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getMovies();
     }
 
     private void getAllMovies() {
@@ -23,9 +28,8 @@ public class FavoriteFragment extends BaseFragment {
         MovieDao movieDao = movieDatabase.movieDao();
         try {
             List<MovieResponse.Movie> movies = movieDao.getAllMovies();
-            adapter = new MovieAdapter(movies, getContext());
-            fragmentMoviesBinding.rvMovies.setAdapter(adapter);
-        } catch (Exception e ) {
+            displayMovies(movies);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

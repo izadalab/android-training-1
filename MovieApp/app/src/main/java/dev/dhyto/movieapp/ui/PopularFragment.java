@@ -24,7 +24,7 @@ public class PopularFragment extends BaseFragment {
     }
 
     @Override
-    protected void displayMovies() {
+    protected void getMovies() {
         getMoviesFromRemote(MovieService.getAPI().getPopularMovies("678ef42a1b584848591cbd02ac3899c3"));
     }
 

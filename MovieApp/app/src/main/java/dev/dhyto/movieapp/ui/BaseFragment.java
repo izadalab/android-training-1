@@ -2,6 +2,11 @@ package dev.dhyto.movieapp.ui;
 
 
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,12 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import dev.dhyto.movieapp.R;
@@ -34,6 +34,8 @@ public abstract class BaseFragment extends Fragment {
 
     protected FragmentMoviesBinding fragmentMoviesBinding;
 
+    protected List<MovieResponse.Movie> movies = new ArrayList<>();
+
     public BaseFragment() {
         // Required empty public constructor
     }
@@ -46,6 +48,8 @@ public abstract class BaseFragment extends Fragment {
 
         View view = fragmentMoviesBinding.getRoot();
 
+        initViews();
+
         return view;
 
     }
@@ -53,21 +57,32 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        initViews();
+
+
+        if (savedInstanceState != null) {
+            List<MovieResponse.Movie> movies = savedInstanceState.getParcelableArrayList("movies");
+            displayMovies(movies);
+        } else {
+            getMovies();
+        }
     }
 
+
     @Override
-    public void onStart() {
-        super.onStart();
-        displayMovies();
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("movies", (ArrayList<? extends Parcelable>) movies);
     }
 
     private void initViews() {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         fragmentMoviesBinding.rvMovies.setLayoutManager(gridLayoutManager);
+        adapter = new MovieAdapter(movies, getContext());
+        fragmentMoviesBinding.rvMovies.setAdapter(adapter);
+
     }
 
-    protected abstract void displayMovies();
+    protected abstract void getMovies();
 
     protected void getMoviesFromRemote(Call<MovieResponse> call) {
         fragmentMoviesBinding.progressbar.setVisibility(View.VISIBLE);
@@ -75,19 +90,24 @@ public abstract class BaseFragment extends Fragment {
             @Override
             public void onResponse(Call<MovieResponse> call, Response<MovieResponse> response) {
                 if (response.isSuccessful()) {
-                    List<MovieResponse.Movie> movies = response.body().getResults();
-                    adapter = new MovieAdapter(movies, getContext());
-                    fragmentMoviesBinding.rvMovies.setAdapter(adapter);
-                    fragmentMoviesBinding.progressbar.setVisibility(View.GONE);
+                    List<MovieResponse.Movie> movieList = response.body().getResults();
+                    displayMovies(movieList);
                 }
             }
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                Log.e("error" , t.getMessage());
+                Log.e("error", t.getMessage());
                 fragmentMoviesBinding.progressbar.setVisibility(View.GONE);
             }
         });
+    }
+
+    protected void displayMovies(List<MovieResponse.Movie> movieList) {
+        fragmentMoviesBinding.progressbar.setVisibility(View.GONE);
+        movies.clear();
+        movies.addAll(movieList);
+        adapter.notifyDataSetChanged();
     }
 
 }
