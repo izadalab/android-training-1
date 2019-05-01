@@ -50,7 +50,7 @@ public class DetailActivity extends AppCompatActivity {
         displayDetail(movie);
         initRecyclerView();
         displayTrailers(movie.getId());
-        findMovieById(movie.getId());
+//        findMovieById(movie.getId());
     }
 
     @Override
@@ -67,9 +67,11 @@ public class DetailActivity extends AppCompatActivity {
             if (isFavorite) {
                 item.setIcon(R.drawable.ic_favorite_border_black_24dp);
                 deleteFromFavorite(movie.getId());
+                isFavorite = false ;
             } else {
                 item.setIcon(R.drawable.ic_favorite_black_24dp);
                 addToFavorite(movie);
+                isFavorite =true ;
             }
 
         }
