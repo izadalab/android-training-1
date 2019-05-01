@@ -1,6 +1,7 @@
 package dev.dhyto.movieapp.ui;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,6 +16,8 @@ import java.util.List;
 
 import dev.dhyto.movieapp.R;
 import dev.dhyto.movieapp.common.Constants;
+import dev.dhyto.movieapp.data.local.MovieDao;
+import dev.dhyto.movieapp.data.local.MovieDatabase;
 import dev.dhyto.movieapp.data.model.MovieResponse;
 import dev.dhyto.movieapp.data.model.TrailerResponse;
 import dev.dhyto.movieapp.data.remote.MovieService;
@@ -29,18 +32,25 @@ public class DetailActivity extends AppCompatActivity {
     private ActivityDetailBinding activityDetailBinding;
     private boolean isFavorite = false;
 
+    private MovieDatabase movieDatabase;
+
+    private MovieResponse.Movie movie;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MovieResponse.Movie movie = getIntent().getParcelableExtra("movie_intent");
+        movie = getIntent().getParcelableExtra("movie_intent");
 
         activityDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+
+        movieDatabase = MovieDatabase.getDatabase(this);
 
         initToolbar(movie);
         displayDetail(movie);
         initRecyclerView();
         displayTrailers(movie.getId());
+        findMovieById(movie.getId());
     }
 
     @Override
@@ -56,10 +66,10 @@ public class DetailActivity extends AppCompatActivity {
         if (id == R.id.favorite_menu) {
             if (isFavorite) {
                 item.setIcon(R.drawable.ic_favorite_border_black_24dp);
-                isFavorite = false;
+                deleteFromFavorite(movie.getId());
             } else {
                 item.setIcon(R.drawable.ic_favorite_black_24dp);
-                isFavorite = true;
+                addToFavorite(movie);
             }
 
         }
@@ -120,5 +130,39 @@ public class DetailActivity extends AppCompatActivity {
                 Toast.makeText(DetailActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void addToFavorite(MovieResponse.Movie movie) {
+        MovieDao movieDao = movieDatabase.movieDao();
+        try {
+            movieDao.insertMovie(movie);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("addError", e.getMessage());
+        }
+    }
+
+    private void deleteFromFavorite(int id) {
+        MovieDao movieDao = movieDatabase.movieDao();
+        movieDao.deleteMovie(id);
+    }
+
+    private void findMovieById(int id) {
+        MovieDao movieDao = movieDatabase.movieDao();
+
+        try {
+            MovieResponse.Movie movie = movieDao.findMovieById(id);
+            if (movie == null) {
+                isFavorite = false;
+            } else {
+                isFavorite = true;
+            }
+        } catch (Exception e) {
+
+        }
+
+
+        Log.d("isFavorite", String.valueOf(isFavorite));
     }
 }

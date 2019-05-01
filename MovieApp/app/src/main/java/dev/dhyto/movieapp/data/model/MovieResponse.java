@@ -3,6 +3,9 @@ package dev.dhyto.movieapp.data.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -97,6 +100,7 @@ public class MovieResponse {
         }
     }
 
+    @Entity(tableName = "movie")
     public static class Movie implements Parcelable {
         /**
          * vote_count : 610
@@ -118,6 +122,7 @@ public class MovieResponse {
         @SerializedName("vote_count")
         private int voteCount;
         @SerializedName("id")
+        @PrimaryKey
         private int id;
         @SerializedName("video")
         private boolean video;
@@ -141,8 +146,9 @@ public class MovieResponse {
         private String overview;
         @SerializedName("release_date")
         private String releaseDate;
-        @SerializedName("genre_ids")
-        private List<Integer> genreIds;
+
+        public Movie() {
+        }
 
         protected Movie(Parcel in) {
             voteCount = in.readInt();
@@ -274,14 +280,6 @@ public class MovieResponse {
 
         public void setReleaseDate(String releaseDate) {
             this.releaseDate = releaseDate;
-        }
-
-        public List<Integer> getGenreIds() {
-            return genreIds;
-        }
-
-        public void setGenreIds(List<Integer> genreIds) {
-            this.genreIds = genreIds;
         }
 
         @Override

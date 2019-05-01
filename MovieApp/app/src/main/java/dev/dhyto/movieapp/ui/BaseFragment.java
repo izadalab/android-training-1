@@ -67,7 +67,7 @@ public abstract class BaseFragment extends Fragment {
         fragmentMoviesBinding.rvMovies.setLayoutManager(gridLayoutManager);
     }
 
-    abstract protected void displayMovies();
+    protected abstract void displayMovies();
 
     protected void getMoviesFromRemote(Call<MovieResponse> call) {
         fragmentMoviesBinding.progressbar.setVisibility(View.VISIBLE);
