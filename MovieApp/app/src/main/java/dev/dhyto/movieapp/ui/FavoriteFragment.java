@@ -9,10 +9,8 @@ import dev.dhyto.movieapp.ui.adapter.MovieAdapter;
 
 public class FavoriteFragment extends BaseFragment {
 
-    private MovieDatabase movieDatabase ;
-
     public FavoriteFragment() {
-        movieDatabase = MovieDatabase.getDatabase(getContext());
+
     }
 
     @Override
@@ -21,6 +19,7 @@ public class FavoriteFragment extends BaseFragment {
     }
 
     private void getAllMovies() {
+        MovieDatabase movieDatabase = MovieDatabase.getDatabase(getActivity());
         MovieDao movieDao = movieDatabase.movieDao();
         try {
             List<MovieResponse.Movie> movies = movieDao.getAllMovies();

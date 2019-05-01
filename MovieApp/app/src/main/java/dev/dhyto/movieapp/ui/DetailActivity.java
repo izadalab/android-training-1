@@ -50,7 +50,6 @@ public class DetailActivity extends AppCompatActivity {
         displayDetail(movie);
         initRecyclerView();
         displayTrailers(movie.getId());
-//        findMovieById(movie.getId());
     }
 
     @Override
@@ -67,11 +66,11 @@ public class DetailActivity extends AppCompatActivity {
             if (isFavorite) {
                 item.setIcon(R.drawable.ic_favorite_border_black_24dp);
                 deleteFromFavorite(movie.getId());
-                isFavorite = false ;
+                isFavorite = false;
             } else {
                 item.setIcon(R.drawable.ic_favorite_black_24dp);
                 addToFavorite(movie);
-                isFavorite =true ;
+                isFavorite = true;
             }
 
         }
@@ -138,7 +137,7 @@ public class DetailActivity extends AppCompatActivity {
         MovieDao movieDao = movieDatabase.movieDao();
         try {
             movieDao.insertMovie(movie);
-
+            Toast.makeText(this, "Add movie to favorite", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("addError", e.getMessage());
@@ -147,24 +146,13 @@ public class DetailActivity extends AppCompatActivity {
 
     private void deleteFromFavorite(int id) {
         MovieDao movieDao = movieDatabase.movieDao();
-        movieDao.deleteMovie(id);
-    }
-
-    private void findMovieById(int id) {
-        MovieDao movieDao = movieDatabase.movieDao();
 
         try {
-            MovieResponse.Movie movie = movieDao.findMovieById(id);
-            if (movie == null) {
-                isFavorite = false;
-            } else {
-                isFavorite = true;
-            }
+            movieDao.deleteMovie(id);
+            Toast.makeText(this, "Delete movie from favorite", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-
+            e.printStackTrace();
+            Log.e("deleteError", e.getMessage());
         }
-
-
-        Log.d("isFavorite", String.valueOf(isFavorite));
     }
 }
