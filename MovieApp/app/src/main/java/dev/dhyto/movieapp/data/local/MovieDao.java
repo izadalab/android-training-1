@@ -17,8 +17,8 @@ public interface MovieDao {
     @Query("SELECT * FROM movie")
     List<MovieResponse.Movie> getAllMovies();
 
-    @Query("SELECT * FROM movie WHERE id = :id")
-    MovieResponse.Movie findMovieById(int id);
+   @Query("SELECT COUNT(*) FROM movie WHERE id = :id")
+   int countMovieById(int id);
 
     @Query("DELETE FROM movie WHERE id = :id")
     void deleteMovie(int id);

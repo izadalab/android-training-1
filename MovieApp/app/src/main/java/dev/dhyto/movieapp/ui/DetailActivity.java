@@ -50,11 +50,26 @@ public class DetailActivity extends AppCompatActivity {
         displayDetail(movie);
         initRecyclerView();
         displayTrailers(movie.getId());
+        isMovieFavorite(movie.getId());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_detail_menu, menu);
+
+        if (isFavorite) {
+            menu.findItem(R.id.favorite_menu).setIcon(getResources()
+                    .getDrawable(R.drawable.ic_favorite_black_24dp));
+        } else {
+            menu.findItem(R.id.favorite_menu).setIcon(getResources()
+                    .getDrawable(R.drawable.ic_favorite_border_black_24dp));
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -75,9 +90,7 @@ public class DetailActivity extends AppCompatActivity {
 
         }
 
-
         return super.onOptionsItemSelected(item);
-
     }
 
     private void initToolbar(MovieResponse.Movie movie) {
@@ -154,5 +167,22 @@ public class DetailActivity extends AppCompatActivity {
             e.printStackTrace();
             Log.e("deleteError", e.getMessage());
         }
+    }
+
+    private void isMovieFavorite(int id) {
+        MovieDao movieDao = movieDatabase.movieDao();
+
+        try {
+            int count = movieDao.countMovieById(id);
+
+            if (count == 0) {
+                isFavorite = false;
+            } else {
+                isFavorite = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
